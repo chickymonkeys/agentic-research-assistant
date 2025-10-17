@@ -57,7 +57,7 @@ First, think deeply about the most effective search patterns for the requested f
 
 ### Refine by Language/Framework
 - **R / Quarto**: Look in src/ and notebooks/ for .R, .Rmd, .qmd, project roots for .Rproj, renv.lock; common I/O in data/ and output/ (figures/tables)
-- **Stata**: Look in src/ for .do/.ado and .log files; typical I/O near data/; check docs/ for codebooks
+- **Stata**: Look in src/ for .do/.ado, main.do, and .log files; typical I/O near data/; check docs/ for codebooks
 - **Python**: Look in src/, notebooks/, lib/, pkg/, module names matching feature, requirements.txt/pyproject.toml
 - **JavaScript/TypeScript**: Look in src/, lib/, components/, pages/, api/
 - **General**: Check for feature-specific directories - I believe in you, you are a smart cookie :)
@@ -67,9 +67,10 @@ First, think deeply about the most effective search patterns for the requested f
 - `*test*`, `*spec*` - Test files
 - `*.config.*`, `*rc*` - Configuration
 - `*.d.ts`, `*.types.*` - Type definitions
-- `README*`, `*.md` in feature dirs - Documentation
-- `*.R`, `*.Rmd`, `*.qmd`, `*.do`, `*.py` - Analysis scripts/notebooks
-- `data/**/*.(csv|tsv|parquet|dta|RData|RDS|json)` - Data assets
+- `README*`, `*.md`, `CODEBOOK*`, `LICENSE*`, `REPLICATION*` in feature dirs - Documentation
+- `*.R`, `*.Rmd`, `*.qmd`, `*.do`, `*.py`, `*_[0-9][0-9]_*` - Analysis scripts/notebooks with workflow numbering
+- `data/**/*.(csv|tsv|parquet|dta|RData|RDS|json|sas7bdat|sav|xlsx|dat|dat.gz|zip|tar.gz)` - Data assets and archives
+- `*PUMS*`, `*ACS*`, `*CPS*`, `*IPUMS*`, `*BLS*` - Statistical agency datasets (Census, IPUMS, BLS)
 
 ## Output Format
 
@@ -92,7 +93,7 @@ Structure your findings like this example:
 - `renv.lock` - R dependency lockfile
 - `pyproject.toml` / `requirements.txt` - Python dependencies
 - `.Rproj` - RStudio project file
-- `Makefile` / `targets.R` - Reproducible pipeline orchestration
+- `Makefile` / `_targets.R` / `Snakefile` / `config.yaml` - Reproducible pipeline orchestration
 
 ### Type Definitions
 - `schema/columns.yaml` - Data dictionary and expected schema
@@ -103,7 +104,10 @@ Structure your findings like this example:
 - `data/processed/` - Clean outputs and intermediate artifacts
 - `output/tables/` - Exported tables (HTML/MD/LaTeX)
 - `output/figures/` - Generated figures
-- `docs/manuscript/` - Paper/manuscript sources
+- `output/logs/` - Execution logs and diagnostics
+- `output/cache/` - Cached intermediate results
+- `docs/slides/` - Presentation materials
+- `docs/draft/` - Paper/manuscript sources
 
 ### Entry Points
 - `analysis/00_run_all.R` - Orchestrates the R pipeline

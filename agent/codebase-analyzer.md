@@ -95,6 +95,45 @@ Structure your analysis like this example:
 - Generates model-ready table using `modelsummary::msummary` at lines 55-68
 - Saves tables to `output/tables/` and figures to `output/figures/` at lines 70-85
 
+#### 4. Statistical Model Analysis (when present)
+- **OLS/Fixed Effects**: Look for `fixest::feols()`, `lfe::felm()`, `plm::plm()` calls
+  - Identify formula patterns with `|` separators for fixed effects (e.g., `y ~ x | firm + year`)
+  - Extract clustering specifications: `cluster = ~id`, `vcov = "cluster"`, `se = "cluster"`
+- **IV/2SLS**: Detect `ivreg::ivreg()`, `fixest::feols(..., iv = ...)`, `AER::ivreg()`
+  - Parse instrument specifications (formulas with `|` separating stages)
+- **Difference-in-Differences**: Identify `did::att_gt()`, manual `treated*post` interactions
+  - Look for event study patterns: multiple time dummies interacted with treatment
+- **RDD**: Detect `rdrobust::rdrobust()`, `rdd::RDestimate()`, bandwidth selection
+  - Check for running variable transformations and polynomial specifications
+- **Panel Data (Python)**: Identify `linearmodels.PanelOLS()`, `statsmodels.panel.*`
+  - Look for entity/time effects: `EntityEffects`, `TimeEffects`, `.set_index(['entity','time'])`
+- **Robust SE**: Note `sandwich`, `clubSandwich`, `HC1/HC2/HC3` specifications
+- Record model comparison tables: `modelsummary::modelsummary()`, `stargazer::stargazer()`
+
+#### 5. Panel Data Structure Detection (when present)
+- **R Panel Setup**: 
+  - `plm::pdata.frame(..., index = c("entity_var", "time_var"))` specifications
+  - `fixest` formulas with entity/time fixed effects
+- **Python Panel Setup**:
+  - `df.set_index(['entity_id', 'year'])` for MultiIndex panels
+  - `linearmodels` entity/time declarations
+- **Stata-style** (if .do files present): `xtset entity_id year`, `xtreg` commands
+- Look for lag/lead operations within groups: `group_by() %>% mutate(lag(...))`, `.groupby().shift()`
+
+#### 6. Visualization Code Patterns (when present)
+- **ggplot2 Layers** (R):
+  - Geometric layers: `geom_point()`, `geom_line()`, `geom_col()`, `geom_errorbar()`
+  - Faceting: `facet_wrap(~var)`, `facet_grid(row~col)`
+  - Themes and scales: `theme_minimal()`, `scale_color_manual()`, `labs()`
+- **Event Study Plots**: 
+  - Coefficient plots with time relative to treatment: `geom_pointrange()` + `geom_hline(yintercept=0)`
+  - Look for `coefplot` package usage or manual coefficient extraction
+- **Binscatter**: Detect `binsreg::binsreg()`, manual binning + aggregation for scatterplots
+- **Python Visualization**:
+  - Matplotlib/seaborn patterns: `plt.scatter()`, `sns.regplot()`, `sns.catplot()`
+  - Plotly for interactive plots: `px.scatter()`, `go.Figure()`
+- Note output paths for figures: `ggsave()`, `plt.savefig()`, figure dimensions/formats
+
 ### Data Flow
 1. Orchestrator starts at `src/00_run_all.R:10`
 2. Cleaning produces `data/processed/survey_clean.csv` at `src/01_data_clean.R:135`
@@ -106,6 +145,12 @@ Structure your analysis like this example:
 - **Schema/QA checks**: `assertthat/testthat` in R, optional `pandera` in Python (`tests/testthat/test_cleaning.R:12-34`, `src/clean.py:120-150`)
 - **Reproducibility**: `set.seed(123)` and version-pinned deps at `src/00_run_all.R:8`
 - **Geospatial hygiene**: Explicit CRS transform to EPSG:2154 before joins at `src/02_merge_shapefiles.R:30-38`
+- **Advanced Data Wrangling**:
+  - **Panel operations**: `group_by(entity) %>% mutate(lag_x = lag(x, 1))` for within-group lags/leads
+  - **Reshaping**: `pivot_wider(names_from=var, values_from=val)` / `pivot_longer()` in tidyr; `melt()`/`dcast()` in data.table
+  - **Fuzzy matching**: `fuzzyjoin::stringdist_*_join()`, `RecordLinkage` for entity name matching
+  - **Winsorization**: `DescTools::Winsorize()`, percentile-based outlier treatment
+  - **Rolling windows**: `zoo::rollapply()`, `slider::slide_dbl()`, `.rolling()` in pandas
 
 ### Configuration
 - R dependencies pinned in `renv.lock` (project root)
