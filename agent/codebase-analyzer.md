@@ -1,7 +1,7 @@
 ---
 description: Analyzes codebase implementation details. Call the codebase-analyzer agent when you need to find detailed information about specific components.
 mode: subagent
-model: anthropic/claude-opus-4-1-20250805
+model: github-copilot/claude-sonnet-4.5
 temperature: 0.1
 tools:
   read: true
@@ -63,7 +63,7 @@ You are a specialist at understanding HOW code works. Your job is to analyze imp
 
 ## Output Format
 
-Structure your analysis like this:
+Structure your analysis like this example:
 
 ```
 ## Analysis: [Feature/Component Name]
@@ -72,47 +72,51 @@ Structure your analysis like this:
 [2-3 sentence summary of how it works]
 
 ### Entry Points
-- `api/routes.js:45` - POST /webhooks endpoint
-- `handlers/webhook.js:12` - handleWebhook() function
+- `src/00_run_all.R:10` - Orchestrates R targets/Make steps for the full data build
+- `src/cli.py:12` - Python CLI entry to run cleaning/validation and write processed artifacts
 
 ### Core Implementation
 
-#### 1. Request Validation (`handlers/webhook.js:15-32`)
-- Validates signature using HMAC-SHA256
-- Checks timestamp to prevent replay attacks
-- Returns 401 if validation fails
+#### 1. Data Ingestion and Cleaning (`src/01_data_clean.R:30-140`)
+- Reads `data/raw/survey.csv` with explicit NA mapping at line 36
+- Standardizes column names via `janitor::clean_names()` at line 44
+- Constructs `income_pc = income / hh_size` with guards for zeros/missing at lines 78-90
+- Filters valid sample: `year >= 2000`, non-missing `region` at lines 96-110
+- Writes `data/processed/survey_clean.csv` deterministically at line 135
 
-#### 2. Data Processing (`services/webhook-processor.js:8-45`)
-- Parses webhook payload at line 10
-- Transforms data structure at line 23
-- Queues for async processing at line 40
+#### 2. Spatial Merge and Validation (`src/02_merge_shapefiles.R:20-95`)
+- Loads INSEE shapefile (`sf::st_read`) and transforms to EPSG:2154 (Lambert-93) at lines 24-38
+- Left join by `INSEE_CODE`; asserts ≤1% unmatched communes at lines 52-60
+- Optional `sf::st_join` for sanity check and logging of mismatches at lines 62-80
+- Exports merged file `data/processed/commune_panel.parquet` at line 92
 
-#### 3. State Management (`stores/webhook-store.js:55-89`)
-- Stores webhook in database with status 'pending'
-- Updates status after processing
-- Implements retry logic for failures
+#### 3. Estimation and Exports (`src/03_estimation.R:15-85`)
+- Computes summary statistics and grouped aggregates at lines 18-40
+- Generates model-ready table using `modelsummary::msummary` at lines 55-68
+- Saves tables to `output/tables/` and figures to `output/figures/` at lines 70-85
 
 ### Data Flow
-1. Request arrives at `api/routes.js:45`
-2. Routed to `handlers/webhook.js:12`
-3. Validation at `handlers/webhook.js:15-32`
-4. Processing at `services/webhook-processor.js:8`
-5. Storage at `stores/webhook-store.js:55`
+1. Orchestrator starts at `src/00_run_all.R:10`
+2. Cleaning produces `data/processed/survey_clean.csv` at `src/01_data_clean.R:135`
+3. Spatial merge reads clean data and shapefile, writes `data/processed/commune_panel.parquet` at `src/02_merge_shapefiles.R:92`
+4. Estimation reads processed artifacts and writes tables/figures at `src/03_estimation.R:55-85`
 
 ### Key Patterns
-- **Factory Pattern**: WebhookProcessor created via factory at `factories/processor.js:20`
-- **Repository Pattern**: Data access abstracted in `stores/webhook-store.js`
-- **Middleware Chain**: Validation middleware at `middleware/auth.js:30`
+- **Deterministic I/O**: Paths via `here::here()` and fixed filenames at `src/01_data_clean.R:130`
+- **Schema/QA checks**: `assertthat/testthat` in R, optional `pandera` in Python (`tests/testthat/test_cleaning.R:12-34`, `src/clean.py:120-150`)
+- **Reproducibility**: `set.seed(123)` and version-pinned deps at `src/00_run_all.R:8`
+- **Geospatial hygiene**: Explicit CRS transform to EPSG:2154 before joins at `src/02_merge_shapefiles.R:30-38`
 
 ### Configuration
-- Webhook secret from `config/webhooks.js:5`
-- Retry settings at `config/webhooks.js:12-18`
-- Feature flags checked at `utils/features.js:23`
+- R dependencies pinned in `renv.lock` (project root)
+- Python deps in `pyproject.toml` / `requirements.txt` (project root)
+- Projection and paths in `config/project.yaml:5-18` (EPSG, directories)
+- Make/targets rules in `Makefile:12-28` and `src/00_run_all.R:10-28`
 
 ### Error Handling
-- Validation errors return 401 (`handlers/webhook.js:28`)
-- Processing errors trigger retry (`services/webhook-processor.js:52`)
-- Failed webhooks logged to `logs/webhook-errors.log`
+- Stop on input schema/key errors (`src/01_data_clean.R:60-74`)
+- Enforce CRS (EPSG:2154) before spatial joins (`src/02_merge_shapefiles.R:28-38`)
+- Guard merge quality and outputs via thresholds and tests (`src/02_merge_shapefiles.R:56-60`, `tests/testthat/test_cleaning.R:20-34`)
 ```
 
 ## Important Guidelines
