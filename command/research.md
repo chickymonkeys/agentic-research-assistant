@@ -24,6 +24,8 @@ The user will provide a ticket for you to read and begin researching.
     - Be clear that locators and pattern-finders collect information for analyzers
     - Typically run a single codebase-analyzer and thoughts-analyzer (in parallel if both needed)
     - Consider which directories, files, or architectural patterns are relevant
+    - Understand the external authorative context the web-search-researcher should gather when needed
+    - Web search outputs will be cached to `thoughts/docs/` for reuse by locators/analyzers
 
 3. **Spawn tasks for comprehensive research (follow this sequence):**
    
@@ -108,11 +110,11 @@ Use the following metadata for the research document frontmatter:
      ...
 
      ## Code References
-     - `path/to/file.py:123` - Description of what's there
-     - `another/file.ts:45-67` - Description of the code block
+   - `src/01_data_clean.R:30-140` - Cleaning and variable construction
+   - `src/clean.py:45-120` - Pandas merge and schema validation
 
-     ## Architecture Insights
-     [Patterns, conventions, and design decisions discovered]
+   ## Architecture Insights
+   [Patterns, conventions, and design decisions discovered (include methodological decisions like data workflow, sample restrictions, variable definitions, model/estimator choices, CRS/projections, and reproducibility settings such as seeds and pinned dependencies)]
 
      ## Historical Context (from thoughts/)
      [Relevant insights from thoughts/ directory with references]
@@ -138,7 +140,7 @@ Use the following metadata for the research document frontmatter:
    - Add `last_updated_note: "Added follow-up research for [brief description]"` to frontmatter
    - Add a new section: `## Follow-up Research [timestamp]`
    - Spawn new sub-agents as needed for additional investigation
-    - Continue updating the document and syncing
+   - Continue updating the document and syncing
 
 9. **Update ticket status** to 'researched' by editing the ticket file's frontmatter.
 

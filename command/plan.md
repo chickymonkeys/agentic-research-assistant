@@ -93,9 +93,9 @@ After getting initial clarifications:
    - Return specific file:line references
    - Find tests and examples
 
-3. **Wait for ALL sub-tasks to complete** before proceeding
+4. **Wait for ALL sub-tasks to complete** before proceeding
 
-4. **Present findings and design options**:
+5. **Present findings and design options**:
    ```
    Based on my research, here's what I found:
 
@@ -187,16 +187,19 @@ After structure approval:
 
 ### Success Criteria:
 
-#### Automated Verification:
-- [ ] Unit tests pass: `turbo test`
-- [ ] Type checking passes: `turbo check`
-- [ ] Integration tests pass: `turbo test-integration`
+#### Automated Verification (only when required):
+- [ ] Unit tests pass: `Rscript -e "testthat::test_dir('tests')"`, `pytest -q`, etc.
+- [ ] Data pipeline runs cleanly (no errors): `Rscript -e "targets::tar_make()"` or `make data`
+- [ ] Reports render successfully: `quarto render` or `Rscript -e "rmarkdown::render('report.Rmd')"`
+- [ ] Lint/format checks pass (if configured): `lintr/styler` (R), `ruff/black --check` (Py)
+- [ ] Schema/validation checks pass (e.g., testthat expectations, pandera validations)
 
 #### Manual Verification:
-- [ ] Feature works as expected when tested via UI
-- [ ] Performance is acceptable under load
-- [ ] Edge case handling verified manually
-- [ ] No regressions in related features
+- [ ] Figures and tables match expected content and formatting
+- [ ] Sample sizes and key statistics within expected ranges/tolerances
+- [ ] Data workflow operations verified end-to-end
+- [ ] Outputs are deterministic with fixed seeds (re-run yields identical artifacts)
+- [ ] No regressions in related scripts/notebooks/pipelines
 
 ---
 
@@ -213,12 +216,12 @@ After structure approval:
 - [Key edge cases]
 
 ### Integration Tests:
-- [End-to-end scenarios]
+- [End-to-end scenarios across data ingestion → transforms → joins → exports]
 
 ### Manual Testing Steps:
 1. [Specific step to verify feature]
 2. [Another verification step]
-3. [Edge case to test manually]
+4. [Edge case to test manually]
 
 ## Performance Considerations
 
@@ -234,7 +237,6 @@ After structure approval:
 - Related research: `thoughts/research/[relevant].md`
 - External sources: `thoughts/docs/YYYY-MM-DD_[relevant].md`
 - Similar implementation: `[file:line]`
-```
 
 ### Step 5: Review
 
@@ -305,48 +307,49 @@ Use the todowrite tool to create a structured task list for the 6 steps above, m
 **Always separate success criteria into two categories:**
 
 1. **Automated Verification** (can be run by execution agents):
-   - Commands that can be run: `make test`, `npm run lint`, etc.
+   - Commands that can be run: `Rscript -e "testthat::test_dir('tests')"`, `targets::tar_make()`, `pytest -q`, `quarto render`, etc.
    - Specific files that should exist
-   - Code compilation/type checking
+   - Lint/format checks and schema validations
    - Automated test suites
 
 2. **Manual Verification** (requires human testing):
-   - UI/UX functionality
-   - Performance under real conditions
-   - Edge cases that are hard to automate
-   - User acceptance criteria
+   - Figures/tables fidelity and interpretability
+   - Performance with large/real datasets
+   - Edge cases in data (missingness, outliers, key uniqueness)
+   - Econometric/model diagnostics as applicable
 
 **Format example:**
 ```markdown
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] All unit tests pass: `turbo test`
-- [ ] No linting errors: `turbo check`
-- [ ] API endpoint returns 200: `curl localhost:3001/auth/sign-in`
+- [ ] All unit tests pass: `Rscript -e "testthat::test_dir('tests')"`, `pytest -q`, etc.
+- [ ] Pipeline runs: `Rscript -e "targets::tar_make()"` (or `make data`)
+- [ ] Reports render: `quarto render` (or `rmarkdown::render('report.Rmd')`)
 
 #### Manual Verification:
-- [ ] New feature appears correctly in the UI
-- [ ] Performance is acceptable with 1000+ items
-- [ ] Error messages are user-friendly
-- [ ] Feature works correctly on mobile devices
+- [ ] Key figures and tables match expected values and formats
+- [ ] Performance acceptable on full dataset
+- [ ] Outputs stable across reruns with fixed seeds
+- [ ] Data dictionary/codebook updated if schema changed
 ```
 
 ## Common Patterns
 
-### For Database Changes:
-- Start with schema/migration
-- Add store methods
-- Update business logic
-- Expose via API
-- Update clients
+### For Data Pipeline Changes:
+- Define input schemas and data sources
+- Implement transformations and variable construction
+- Join datasets with documented keys and metadata
+- Produce deterministic outputs in data/processed and output/
+- Add validation checks and tests
 
 ### For New Features:
 - Research existing patterns first
-- Start with data model
-- Build backend logic
-- Add API endpoints
-- Implement UI last
+- Start with data model and schema
+- Build data pipeline and workflow
+- Define model specification and diagnostics
+- Generate results visualization
+- Add reproducibility (seeds, pinned deps) and document assumptions
 
 ### For Refactoring:
 - Document current behavior

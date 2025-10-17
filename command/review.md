@@ -20,19 +20,19 @@ You will be given instructions, followed by a review that will contain user spec
 
 3. **Spawn parallel research tasks** to discover implementation:
    ```
-   Task 1 - Verify database changes:
-   Research if migration [N] was added and schema changes match plan.
-   Check: migration files, schema version, table structure
-   Return: What was implemented vs what plan specified
+   Task 1 - Verify pipeline/build:
+   Run the data pipeline or build step and confirm outputs exist at expected paths.
+   Check: exit status, produced artifacts in data/processed and output/
+   Return: What was produced vs what the plan specified
 
    Task 2 - Verify code changes:
-   Find all modified files related to [feature].
-   Compare actual changes to plan specifications.
+   Find all modified scripts/notebooks related to [feature].
+   Compare variable constructions, joins/keys, CRS handling, and paths to the plan specifications.
    Return: File-by-file comparison of planned vs actual
 
-   Task 3 - Verify test coverage:
-   Check if tests were added/modified as specified.
-   Run test commands and capture results.
+   Task 3 - Verify tests/validation:
+   Check if tests/validations were added or updated as specified.
+   Run test scripts and any schema checks; capture results.
    Return: Test status and any missing coverage
    ```
 
@@ -75,16 +75,16 @@ Use the todowrite tool to create a structured task list for the 4 steps above, m
 ⚠️ Phase 3: [Name] - Partially implemented (see issues)
 
 ### Automated Verification Results
-✓ Build passes: `turbo build`
-✓ Tests pass: `turbo test`
-✗ Linting issues: `turbo check` (3 warnings)
+✓ Pipeline runs successfully: `Rscript -e "targets::tar_make()"` (or `make data`)
+✓ Tests pass: `Rscript -e "testthat::test_dir('tests')"` / `pytest -q`
+⚠ Lint/format warnings: `lintr/styler` / `ruff/black --check` (3 warnings)
 
 ### Code Review Findings
 
 #### Matches Plan:
-- Database migration correctly adds [table]
-- API endpoints implement specified methods
-- Error handling follows plan
+- Variable construction and transformations match specification
+- Join keys and CRS/projection handling are implemented as planned
+- Validation checks align with plan
 
 #### Deviations from Plan:
 - Check the plan's "## Deviations from Plan" section (if present)
@@ -97,16 +97,16 @@ Use the todowrite tool to create a structured task list for the 4 steps above, m
   - Added extra validation in [file:line] (improvement)
 
 #### Potential Issues:
-- Missing index on foreign key could impact performance
-- No rollback handling in migration
+- Large join may be memory-intensive; consider chunking or indexing
+- Missing seed may reduce determinism of outputs
 
 ### Manual Testing Required:
-1. UI functionality:
-   - [ ] Verify [feature] appears correctly
-   - [ ] Test error states with invalid input
+1. Outputs:
+   - [ ] Visually verify figures and tables match expected content
+   - [ ] Confirm sample sizes and key statistics within tolerance
 
 2. Integration:
-   - [ ] Confirm works with existing [component]
+   - [ ] Confirm compatibility with upstream/downstream steps
    - [ ] Check performance with large datasets
 
 ### Recommendations:
