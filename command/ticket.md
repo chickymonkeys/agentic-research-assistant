@@ -28,19 +28,22 @@ Ask specific, targeted questions based on ticket type to gather comprehensive co
 #### For Bug Tickets:
 1. What specific behavior are you seeing?
 2. What should happen instead?
-3. Steps to reproduce (be very specific)?
-4. When did this start happening?
-5. Any error messages or logs?
-6. Have you tried any workarounds?
+3. Is this a logical or a code issue?
+4. Steps to reproduce (be very specific)?
+5. When did this start happening?
+6. Any error messages or logs?
+7. Have you tried any workarounds?
 
 #### For Feature Tickets:
-1. What problem does this solve for users?
-2. Who are the primary users of this feature?
-3. What are the acceptance criteria?
-4. Are there any specific output requirements?
-5. Should this integrate with existing features?
-6. Any performance or scalability requirements?
-7. What technologies or libraries should be used?
+1. Is the feature about documentation or code?
+2. What data workflow stage does this address (ingestion/cleaning/analysis/visualization/export)?
+3. What are the input data sources and their formats?
+4. What sample restrictions or filters apply?
+5. What variables need to be constructed or transformed?
+6. What is the target output (dataset/figure/table/report)?
+7. Are there econometric specifications to implement (model type, fixed effects, clustering)?
+8. What reproducibility requirements exist (seeds, dependency pinning, deterministic outputs)?
+9. Should this integrate with existing features?
 
 #### For Debt Tickets:
 1. What specific code or architecture needs improvement?
@@ -74,24 +77,24 @@ After receiving initial responses, analyze how these answers impact the original
 
 **Example Flow for Feature Ticket**:
 ```
-Initial: "Automate generation of manuscript summary tables from our .RData file"
-User: "Yes, create Table 1 (descriptives) and Table A1 (by treatment status) from the consolidated `.RData`."
+Initial: "Automate generation of summary tables from household survey data"
+User: "Yes, create Table 1 (descriptives) and Table A1 (by treatment status) from consolidated .RData"
 
 Follow-up questions (Round 1):
-1. Should this be implemented in R only or also support Python?
-2. What is the exact input source and which data frames inside it should be used?
-3. What sample restrictions apply (years, regions, population, exclusions)?
-4. How should missing values/outliers be handled?
-5. What are the required output formats and destinations?
+1. Should this be implemented in R only or also support Stata/Python?
+2. What is the exact input source and which data frames should be used?
+3. What sample restrictions apply (years, regions, population filters)?
+4. How should missing values and outliers be handled?
+5. What output formats are required (LaTeX/HTML/Markdown) and destinations?
 
-User responses indicate some boundaries...
+User responses indicate boundaries...
 
 Follow-up questions (Round 2):
-6. Should we pin reproducibility (set seeds, use `renv`/lockfiles) and document the environment?
-7. Should we include automated tests/validations for schema, row counts, and key stats?
-8. Do we also generate companion figures (e.g., histograms, binscatter) alongside tables?
-9. Are there performance constraints (full dataset vs sampled) and expected run time limits?
-10. Should this integrate with existing orchestration and update the manuscript build?
+6. Should we pin reproducibility (set.seed, renv/lockfile) and document environment?
+7. Should we include validation checks for schema, row counts, key statistics?
+8. Should we generate companion figures (histograms, binscatter) alongside tables?
+9. Are there performance constraints (full dataset vs sample) and run time limits?
+10. Should this integrate with existing pipeline (targets/Make) and update manuscript build?
 ```
 
 **When to Stop the Exploration**:

@@ -54,7 +54,10 @@ Don't let verification interrupt your flow - batch it at natural stopping points
 
 When something isn't working as expected:
 - First, make sure you've read and understood all the relevant code
-- Consider if the codebase, data inputs, or environment (e.g., renv/virtualenv, package versions, Python or R versions) have evolved since the plan was written
+- Consider if the codebase, data inputs, or environment have evolved since the plan was written
+  - For R: check `renv.lock` and `.Rprofile` for package versions, R version in `DESCRIPTION` or `Dockerfile`
+  - For Python: check `requirements.txt`, `pyproject.toml`, or `environment.yml` for package versions and Python version
+  - Check if data schemas, file paths, or external dependencies have changed
 - Present the mismatch clearly and ask for guidance
 
 Use sub-tasks sparingly - mainly for targeted debugging or exploring unfamiliar territory.

@@ -50,8 +50,10 @@ For each phase in the plan:
    - If failures, investigate root cause
 
 3. **Assess manual criteria**:
-   - List what needs manual testing
-   - Provide clear steps for user verification
+   - List what needs manual testing based on the plan's success criteria
+   - Provide clear, specific steps for user verification
+   - Adapt validation approach to the ticket scope
+   - Emphasize checks that require domain expertise and human judgment
 
 4. **Think deeply about edge cases**:
    - Were error conditions handled?
@@ -75,7 +77,7 @@ Use the todowrite tool to create a structured task list for the 4 steps above, m
 ⚠️ Phase 3: [Name] - Partially implemented (see issues)
 
 ### Automated Verification Results
-✓ Pipeline runs successfully: `Rscript -e "targets::tar_make()"` (or `make data`)
+✓ Pipeline runs successfully: `Rscript -e "targets::tar_make()"` / `make data`
 ✓ Tests pass: `Rscript -e "testthat::test_dir('tests')"` / `pytest -q`
 ⚠ Lint/format warnings: `lintr/styler` / `ruff/black --check` (3 warnings)
 
@@ -100,14 +102,30 @@ Use the todowrite tool to create a structured task list for the 4 steps above, m
 - Large join may be memory-intensive; consider chunking or indexing
 - Missing seed may reduce determinism of outputs
 
-### Manual Testing Required:
-1. Outputs:
-   - [ ] Visually verify figures and tables match expected content
-   - [ ] Confirm sample sizes and key statistics within tolerance
+### Manual Testing Required
 
-2. Integration:
-   - [ ] Confirm compatibility with upstream/downstream steps
-   - [ ] Check performance with large datasets
+Review plan-specific success criteria and verify implementation quality:
+
+1. Outputs & Correctness:
+   - [ ] Visually inspect figures and tables for accuracy and formatting
+   - [ ] Confirm key statistics, sample sizes, and estimates within expected tolerances
+   - [ ] Verify output files saved to expected paths with correct naming
+
+2. Domain-Specific Validation (adapt based on ticket scope):
+   - [ ] Data quality: distributions, outliers, missing patterns, logical consistency
+   - [ ] Methodological validation: model diagnostics, specification tests, instrument strength (as applicable)
+   - [ ] Geospatial accuracy: CRS/projections, spatial joins, boundary alignment (as applicable)
+   - [ ] [Other checks relevant to this specific implementation]
+
+3. Reproducibility:
+   - [ ] Re-running pipeline produces identical outputs
+   - [ ] Random operations use set seeds
+   - [ ] Dependencies pinned in `renv.lock`/`requirements.txt`
+
+4. Integration & Performance:
+   - [ ] Compatible with upstream data sources and downstream analysis scripts
+   - [ ] Performance acceptable with realistically-sized datasets
+   - [ ] Documentation explains key methodological choices for maintainers
 
 ### Recommendations:
 - Address linting warnings before merge

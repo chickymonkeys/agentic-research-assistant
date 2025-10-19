@@ -193,13 +193,16 @@ After structure approval:
 - [ ] Reports render successfully: `quarto render` or `Rscript -e "rmarkdown::render('report.Rmd')"`
 - [ ] Lint/format checks pass (if configured): `lintr/styler` (R), `ruff/black --check` (Py)
 - [ ] Schema/validation checks pass (e.g., testthat expectations, pandera validations)
+- [ ] Output files exist at expected paths in `data/processed/` and `output/`
 
 #### Manual Verification:
-- [ ] Figures and tables match expected content and formatting
-- [ ] Sample sizes and key statistics within expected ranges/tolerances
-- [ ] Data workflow operations verified end-to-end
-- [ ] Outputs are deterministic with fixed seeds (re-run yields identical artifacts)
-- [ ] No regressions in related scripts/notebooks/pipelines
+- [ ] Figures and tables match expected content, formatting, and sample sizes
+- [ ] Key statistics (means, N, correlations) within expected ranges/tolerances
+- [ ] Data workflow operations verified end-to-end (raw → processed → output)
+- [ ] Outputs are deterministic with fixed seeds (re-run yields identical results)
+- [ ] No regressions in related scripts/notebooks/upstream processes
+- [ ] Variable definitions match codebook/specification
+- [ ] Econometric diagnostics reasonable (if applicable): parallel trends, first-stage F-stat, balance
 
 ---
 
@@ -237,6 +240,7 @@ After structure approval:
 - Related research: `thoughts/research/[relevant].md`
 - External sources: `thoughts/docs/YYYY-MM-DD_[relevant].md`
 - Similar implementation: `[file:line]`
+```
 
 ### Step 5: Review
 
@@ -337,19 +341,24 @@ Use the todowrite tool to create a structured task list for the 6 steps above, m
 ## Common Patterns
 
 ### For Data Pipeline Changes:
-- Define input schemas and data sources
-- Implement transformations and variable construction
-- Join datasets with documented keys and metadata
-- Produce deterministic outputs in data/processed and output/
-- Add validation checks and tests
+- Define input data sources and schemas
+- Implement cleaning with explicit NA handling and variable construction
+- Perform merges/joins with documented keys and merge quality checks
+- Apply sample restrictions with clear documentation
+- Produce deterministic outputs in `data/processed/` and `output/`
+- Add validation checks (schema, uniqueness, ranges)
+- Set reproducibility elements (seeds, pinned dependencies)
+- Document assumptions and decisions in codebook/README
 
 ### For New Features:
-- Research existing patterns first
-- Start with data model and schema
-- Build data pipeline and workflow
-- Define model specification and diagnostics
-- Generate results visualization
-- Add reproducibility (seeds, pinned deps) and document assumptions
+- Research existing data workflow patterns first
+- Start with data model and expected schema
+- Build data pipeline with clear input → output contract
+- Define econometric specification and diagnostics (if applicable)
+- Generate visualization and/or table outputs
+- Add reproducibility (seeds, pinned deps, convergence criteria)
+- Document sample restrictions, variable definitions, and methodological assumptions
+- Include manual validation steps for data quality
 
 ### For Refactoring:
 - Document current behavior

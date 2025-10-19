@@ -69,11 +69,11 @@ The user will provide a ticket for you to read and begin researching.
 
 5. **Gather metadata for the research document:**
 
-Use the following metadata for the research document frontmatter:
+   Use the following metadata for the research document frontmatter:
 
-**metadata for frontmatter**
+   **metadata for frontmatter**
 
-!`agentic metadata`
+   !`agentic metadata`
 
 6. **Generate research document:**
    - Filename: `thoughts/research/date_topic.md`
@@ -107,14 +107,13 @@ Use the following metadata for the research document frontmatter:
      - Finding with reference ([file.ext:line])
      - Connection to other components
      - Implementation details
-     ...
 
      ## Code References
-   - `src/01_data_clean.R:30-140` - Cleaning and variable construction
-   - `src/clean.py:45-120` - Pandas merge and schema validation
+     - `src/01_data_clean.R:30-140` - Cleaning and variable construction
+     - `src/clean.py:45-120` - Pandas merge and schema validation
 
-   ## Architecture Insights
-   [Patterns, conventions, and design decisions discovered (include methodological decisions like data workflow, sample restrictions, variable definitions, model/estimator choices, CRS/projections, and reproducibility settings such as seeds and pinned dependencies)]
+     ## Architecture Insights
+     [Patterns, conventions, and design decisions discovered, including: methodological choices (data workflow orchestration, sample restrictions, variable definitions); econometric specifications (model types, fixed effects structure, instrument validity); inference approach (clustering levels, robust standard errors, bootstrap methods); reproducibility (random seeds, pinned dependencies (renv.lock/requirements.txt), convergence criteria)]
 
      ## Historical Context (from thoughts/)
      [Relevant insights from thoughts/ directory with references]
