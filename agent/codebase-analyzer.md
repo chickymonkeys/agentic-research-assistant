@@ -117,8 +117,14 @@ Structure your analysis like this example:
 - **Python Panel Setup**:
   - `df.set_index(['entity_id', 'year'])` for MultiIndex panels
   - `linearmodels` entity/time declarations
-- **Stata-style** (if .do files present): `xtset entity_id year`, `xtreg` commands
-- Look for lag/lead operations within groups: `group_by() %>% mutate(lag(...))`, `.groupby().shift()`
+- **Stata Panel Detection**:
+  - Panel declaration: `xtset entity_id year`
+  - Fixed effects: `xtreg y x, fe` (within estimator), `areg y x, absorb(firm_id)`, `reghdfe y x, absorb(firm_id year)`
+  - Clustering: `reg y x, cluster(id)` or `vce(cluster id)` option
+  - IV/2SLS: `ivregress 2sls y (endog = instrument) x`, `ivreghdfe y (endog = instrument) x, absorb(fe) cluster(id)`
+  - DiD: Manual `treated*post` interactions or `did_multiplegt`, `csdid`, `eventstudyinteract` packages
+  - Lag/lead: `L.var` (lag), `F.var` (lead), `L(1/3).var` (lags 1-3)
+- Look for lag/lead operations within groups: `group_by() |> mutate(lag(...))`, `.groupby().shift()`
 
 #### 6. Visualization Code Patterns (when present)
 - **ggplot2 Layers** (R):
@@ -146,7 +152,7 @@ Structure your analysis like this example:
 - **Reproducibility**: `set.seed(123)` and version-pinned deps at `src/00_run_all.R:8`
 - **Geospatial hygiene**: Explicit CRS transform to EPSG:2154 before joins at `src/02_merge_shapefiles.R:30-38`
 - **Advanced Data Wrangling**:
-  - **Panel operations**: `group_by(entity) %>% mutate(lag_x = lag(x, 1))` for within-group lags/leads
+  - **Panel operations**: `group_by(entity) |> mutate(lag_x = lag(x, 1))` for within-group lags/leads
   - **Reshaping**: `pivot_wider(names_from=var, values_from=val)` / `pivot_longer()` in tidyr; `melt()`/`dcast()` in data.table
   - **Fuzzy matching**: `fuzzyjoin::stringdist_*_join()`, `RecordLinkage` for entity name matching
   - **Winsorization**: `DescTools::Winsorize()`, percentile-based outlier treatment
