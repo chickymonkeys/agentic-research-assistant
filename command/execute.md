@@ -43,7 +43,7 @@ If you encounter a mismatch:
 ## Verification Approach
 
 After implementing a phase:
-- Run the success criteria checks (usually `bun run check` covers everything)
+- Run the success criteria checks defined in the plan
 - Fix any issues before proceeding
 - Update your progress in both the plan and your todos
 - Check off completed items in the plan file itself using Edit
@@ -54,7 +54,10 @@ Don't let verification interrupt your flow - batch it at natural stopping points
 
 When something isn't working as expected:
 - First, make sure you've read and understood all the relevant code
-- Consider if the codebase has evolved since the plan was written
+- Consider if the codebase, data inputs, or environment have evolved since the plan was written
+  - For R: check `renv.lock` and `.Rprofile` for package versions, R version in `DESCRIPTION` or `Dockerfile`
+  - For Python: check `requirements.txt`, `pyproject.toml`, or `environment.yml` for package versions and Python version
+  - Check if data schemas, file paths, or external dependencies have changed
 - Present the mismatch clearly and ask for guidance
 
 Use sub-tasks sparingly - mainly for targeted debugging or exploring unfamiliar territory.
@@ -78,7 +81,7 @@ Remember: You're implementing a solution, not just checking boxes. Keep the end 
 
 4. **Implement each phase sequentially**, adapting to what you find while following the plan's intent.
 
-5. **Verify each phase** using the success criteria checks (usually `bun run check` covers everything). Fix any issues before proceeding.
+5. **Verify each phase** using the success criteria checks. Prefer running the exact commands listed in the plan. Fix any issues before proceeding.
 
 6. **Update the plan file** with checkmarks for completed items using the Edit tool.
 

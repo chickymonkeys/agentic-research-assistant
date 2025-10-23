@@ -24,6 +24,7 @@ Use conventional commit prefixes to categorize changes:
    - Review the `git status -s` to get an idea of what files changed
    - Consider whether changes should be one commit or multiple logical commits
    - Use `git diff` on specific files if you need more context. Only do this if you have no knowledge of the changes in that file.
+   - Avoid committing large derived artifacts (e.g., `data/processed/`, `output/figures/`, `output/tables/`) unless explicitly intended; prefer `.gitignore` or Git LFS for large generated files.
 
 2. **Plan your commit(s):**
    - Identify which files belong together

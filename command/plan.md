@@ -24,6 +24,7 @@ You are tasked with creating detailed implementation plans through an interactiv
    - Use the **codebase-locator** task to find all files related to the files given by the user
    - Use the **codebase-analyzer** task to understand how the current implementation works
    - If relevant, use the **thoughts-locator** task to find any existing thoughts documents about this feature
+   - If relevant, use the **web-search-researcher** task to find additional external authorative context and capture provenance
 
    These agents will:
    - Find relevant source files, configs, and tests
@@ -83,6 +84,7 @@ After getting initial clarifications:
    **For historical context:**
    - **thoughts-locator** - To find any research, plans, or decisions about this area
    - **thoughts-analyzer** - To extract key insights from the most relevant documents
+   - **web-search-researcher** - To pull authoritative external references when needed
 
    Each agent knows how to:
    - Find the right files and code patterns
@@ -91,9 +93,9 @@ After getting initial clarifications:
    - Return specific file:line references
    - Find tests and examples
 
-3. **Wait for ALL sub-tasks to complete** before proceeding
+4. **Wait for ALL sub-tasks to complete** before proceeding
 
-4. **Present findings and design options**:
+5. **Present findings and design options**:
    ```
    Based on my research, here's what I found:
 
@@ -185,16 +187,22 @@ After structure approval:
 
 ### Success Criteria:
 
-#### Automated Verification:
-- [ ] Unit tests pass: `turbo test`
-- [ ] Type checking passes: `turbo check`
-- [ ] Integration tests pass: `turbo test-integration`
+#### Automated Verification (only when required):
+- [ ] Unit tests pass: `Rscript -e "testthat::test_dir('tests')"`, `pytest -q`, etc.
+- [ ] Data pipeline runs cleanly (no errors): `Rscript -e "targets::tar_make()"` or `make data`
+- [ ] Reports render successfully: `quarto render` or `Rscript -e "rmarkdown::render('report.Rmd')"`
+- [ ] Lint/format checks pass (if configured): `lintr/styler` (R), `ruff/black --check` (Py)
+- [ ] Schema/validation checks pass (e.g., testthat expectations, pandera validations)
+- [ ] Output files exist at expected paths in `data/processed/` and `output/`
 
 #### Manual Verification:
-- [ ] Feature works as expected when tested via UI
-- [ ] Performance is acceptable under load
-- [ ] Edge case handling verified manually
-- [ ] No regressions in related features
+- [ ] Figures and tables match expected content, formatting, and sample sizes
+- [ ] Key statistics (means, N, correlations) within expected ranges/tolerances
+- [ ] Data workflow operations verified end-to-end (raw → processed → output)
+- [ ] Outputs are deterministic with fixed seeds (re-run yields identical results)
+- [ ] No regressions in related scripts/notebooks/upstream processes
+- [ ] Variable definitions match codebook/specification
+- [ ] Econometric diagnostics reasonable (if applicable): parallel trends, first-stage F-stat, balance
 
 ---
 
@@ -211,12 +219,12 @@ After structure approval:
 - [Key edge cases]
 
 ### Integration Tests:
-- [End-to-end scenarios]
+- [End-to-end scenarios across data ingestion → transforms → joins → exports]
 
 ### Manual Testing Steps:
 1. [Specific step to verify feature]
 2. [Another verification step]
-3. [Edge case to test manually]
+4. [Edge case to test manually]
 
 ## Performance Considerations
 
@@ -230,6 +238,7 @@ After structure approval:
 
 - Original ticket: `thoughts/tickets/eng_XXXX.md`
 - Related research: `thoughts/research/[relevant].md`
+- External sources: `thoughts/docs/YYYY-MM-DD_[relevant].md`
 - Similar implementation: `[file:line]`
 ```
 
@@ -302,48 +311,54 @@ Use the todowrite tool to create a structured task list for the 6 steps above, m
 **Always separate success criteria into two categories:**
 
 1. **Automated Verification** (can be run by execution agents):
-   - Commands that can be run: `make test`, `npm run lint`, etc.
+   - Commands that can be run: `Rscript -e "testthat::test_dir('tests')"`, `targets::tar_make()`, `pytest -q`, `quarto render`, etc.
    - Specific files that should exist
-   - Code compilation/type checking
+   - Lint/format checks and schema validations
    - Automated test suites
 
 2. **Manual Verification** (requires human testing):
-   - UI/UX functionality
-   - Performance under real conditions
-   - Edge cases that are hard to automate
-   - User acceptance criteria
+   - Figures/tables fidelity and interpretability
+   - Performance with large/real datasets
+   - Edge cases in data (missingness, outliers, key uniqueness)
+   - Econometric/model diagnostics as applicable
 
 **Format example:**
 ```markdown
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] All unit tests pass: `turbo test`
-- [ ] No linting errors: `turbo check`
-- [ ] API endpoint returns 200: `curl localhost:3001/auth/sign-in`
+- [ ] All unit tests pass: `Rscript -e "testthat::test_dir('tests')"`, `pytest -q`, etc.
+- [ ] Pipeline runs: `Rscript -e "targets::tar_make()"` (or `make data`)
+- [ ] Reports render: `quarto render` (or `rmarkdown::render('report.Rmd')`)
 
 #### Manual Verification:
-- [ ] New feature appears correctly in the UI
-- [ ] Performance is acceptable with 1000+ items
-- [ ] Error messages are user-friendly
-- [ ] Feature works correctly on mobile devices
+- [ ] Key figures and tables match expected values and formats
+- [ ] Performance acceptable on full dataset
+- [ ] Outputs stable across reruns with fixed seeds
+- [ ] Data dictionary/codebook updated if schema changed
 ```
 
 ## Common Patterns
 
-### For Database Changes:
-- Start with schema/migration
-- Add store methods
-- Update business logic
-- Expose via API
-- Update clients
+### For Data Pipeline Changes:
+- Define input data sources and schemas
+- Implement cleaning with explicit NA handling and variable construction
+- Perform merges/joins with documented keys and merge quality checks
+- Apply sample restrictions with clear documentation
+- Produce deterministic outputs in `data/processed/` and `output/`
+- Add validation checks (schema, uniqueness, ranges)
+- Set reproducibility elements (seeds, pinned dependencies)
+- Document assumptions and decisions in codebook/README
 
 ### For New Features:
-- Research existing patterns first
-- Start with data model
-- Build backend logic
-- Add API endpoints
-- Implement UI last
+- Research existing data workflow patterns first
+- Start with data model and expected schema
+- Build data pipeline with clear input → output contract
+- Define econometric specification and diagnostics (if applicable)
+- Generate visualization and/or table outputs
+- Add reproducibility (seeds, pinned deps, convergence criteria)
+- Document sample restrictions, variable definitions, and methodological assumptions
+- Include manual validation steps for data quality
 
 ### For Refactoring:
 - Document current behavior
