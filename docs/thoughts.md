@@ -106,7 +106,7 @@ Any relevant background information
 
 **Purpose**: Post-implementation validation and documentation.
 
-**File Format**: `[type]-[subject]-[number]-review.md`
+**File Format**: `[type]-[subject]-[number]-review.md` (e.g., `feature-user-dashboard-123-review.md`)
 
 **Content Structure**:
 - Implementation summary
