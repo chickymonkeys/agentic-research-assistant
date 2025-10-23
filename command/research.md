@@ -33,7 +33,8 @@ The user will provide a ticket for you to read and begin researching.
    - Identify all topics/components/areas you need to locate
    - Group related topics into coherent batches
    - Spawn **web-search-researcher** agents in parallel to gather external authorative context and capturing provenance
-     - Use when ticket mentions: unfamiliar frameworks/libraries, external APIs/data sources, econometric methodologies, best practices for specific technologies, or when validating assumptions about external systems
+     - Use when ticket mentions: unfamiliar frameworks/libraries, external APIs/data sources, econometric methodologies, academic literature/papers, best practices for specific technologies, or when validating assumptions about external systems
+     - Particularly valuable for: methodological guidance (estimation strategies, identification approaches), literature reviews (NBER, SSRN, arXiv, RePEc), and domain-specific best practices
      - Check `thoughts/docs/` first to avoid duplicate research (web-search-researcher has built-in cache checking)
    - Spawn **codebase-locator** agents in parallel for each topic group to find WHERE files and components live
    - Simultaneously spawn **thoughts-locator** agents in parallel to discover relevant documents

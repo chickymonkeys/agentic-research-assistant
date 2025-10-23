@@ -42,8 +42,9 @@ Ask specific, targeted questions based on ticket type to gather comprehensive co
 5. What variables need to be constructed or transformed?
 6. What is the target output (dataset/figure/table/report)?
 7. Are there econometric specifications to implement (model type, fixed effects, clustering)?
-8. What reproducibility requirements exist (seeds, dependency pinning, deterministic outputs)?
-9. Should this integrate with existing features?
+8. Are there specific methodologies, estimators, or academic literature that should guide this implementation?
+9. What reproducibility requirements exist (seeds, dependency pinning, deterministic outputs)?
+10. Should this integrate with existing features?
 
 #### For Debt Tickets:
 1. What specific code or architecture needs improvement?
@@ -209,6 +210,7 @@ Examples:
 - "OAuth2 authentication best practices for REST APIs"
 - "IPUMS census microdata variable definitions for income analysis"
 - "Difference-in-differences with staggered treatment timing methodology"
+- "Recent NBER working papers on synthetic control methods with multiple treated units"
 
 ## Notes
 [Any additional notes or questions for research/planning]
