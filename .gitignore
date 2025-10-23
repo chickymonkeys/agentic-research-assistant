@@ -18,3 +18,9 @@ bin/
 # OS files
 Thumbs.db
 tsconfig.tsbuildinfo
+
+# Kiro AI
+.kiro/
+
+# Opencode
+opencode.json
