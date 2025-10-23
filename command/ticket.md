@@ -132,7 +132,7 @@ Extract and organize information specifically for the research phase:
 - Security requirements
 
 ### Step 5: Ticket Creation
-Create the ticket file at: `thoughts/tickets/type_subject.md`
+Create the ticket file at: `thoughts/tickets/type-subject-number.md`
 
 Use this template structure:
 
@@ -141,6 +141,7 @@ Use this template structure:
 type: [bug|feature|debt]
 priority: [high|medium|low]
 created: [ISO date]
+created_by: [model-name-and-version]
 status: open
 tags: [relevant-tags]
 keywords: [comma-separated keywords for research]
@@ -237,11 +238,11 @@ Use the todowrite tool to create a structured task list for the 7 steps above, m
 - **Research-friendly**: Include specific hooks for research agents
 
 ### File Naming
-- Use format: `<type>_<subject>.md`
+- Use format: `<type>-<subject>-<number>.md`
 - Examples:
-  - `bug_binscatter_visualization.md`
-  - `feature_household_panel_data_pipeline.md`
-  - `debt_mortality_analysis_refactor.md`
+  - `bug-binscatter-visualization-001.md`
+  - `feature-household-panel-data-pipeline-002.md`
+  - `debt-mortality-analysis-refactor-003.md`
 
 ## Examples
 
@@ -250,8 +251,8 @@ Use the todowrite tool to create a structured task list for the 7 steps above, m
 ---
 type: bug
 priority: high
-created: 2025-09-03T12:45:00Z
-created_by: Opus
+created: 2025-01-15T10:30:00Z
+created_by: Claude Opus 4.1
 status: open
 tags: [r, ggplot2, binsreg, visualization, data.table]
 keywords: [binned scatterplot, binsreg, ggplot2, geom_line, ggsave, R]
@@ -314,8 +315,8 @@ The ggplot2 object p displays all three layers as intended: a cloud of semi-tran
 ---
 type: feature
 priority: medium
-created: 2025-09-04T12:00:00Z
-created_by: Opus
+created: 2025-01-15T14:20:00Z
+created_by: Claude Opus 4.1
 status: open
 tags: [r, eda, data-documentation, reproduciblity, exploration, rmarkdown]
 keywords: [exploratory data analysis, data sources, codebook, data documentation, summary statistics]

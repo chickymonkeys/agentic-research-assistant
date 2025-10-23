@@ -8,9 +8,9 @@ The `thoughts/` directory is your project's knowledge base, containing all docum
 
 ```
 thoughts/
-├── architecture/     # System design and decisions
-├── tickets/         # Work items and feature requests
-├── research/        # Analysis and findings
+├── architecture/   # System design and decisions
+├── tickets/        # Work items and feature requests
+├── research/       # Analysis and findings
 ├── plans/          # Implementation specifications
 ├── reviews/        # Post-implementation validation
 ├── docs/           # External web research cache
@@ -40,7 +40,7 @@ thoughts/
 
 **Purpose**: Track work items, issues, and feature requests.
 
-**File Format**: `[type]-[number].md` (e.g., `eng-123.md`, `bug-456.md`)
+**File Format**: `[type]-[subject]-[number].md` (e.g., `feature-user-dashboard-123.md`, `bug-login-validation-456.md`)
 
 **Content Structure**:
 ```markdown
@@ -107,7 +107,7 @@ Any relevant background information
 
 **Purpose**: Post-implementation validation and documentation.
 
-**File Format**: `YYYY-MM-DD_review.md`
+**File Format**: `[type]-[subject]-[number]-review.md` (e.g., `feature-user-dashboard-123-review.md`)
 
 **Content Structure**:
 - Implementation summary

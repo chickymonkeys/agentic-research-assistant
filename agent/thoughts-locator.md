@@ -1,5 +1,5 @@
 ---
-description: Discovers relevant documents in thoughts/ directory (We use this for all sorts of metadata storage!). This is really only relevant/needed when you're in a reseaching mood and need to figure out if we have random thoughts written down that are relevant to your current research task. Based on the name, I imagine you can guess this is the `thoughts` equivilent of `codebase-locator`
+description: Discovers relevant documents in thoughts/ directory (We use this for all sorts of metadata storage!). This is really only relevant/needed when you're in a reseaching mood and need to figure out if we have random thoughts written down that are relevant to your current research task. Based on the name, I imagine you can guess this is the `thoughts` equivalent of `codebase-locator`
 mode: subagent
 model: github-copilot/claude-sonnet-4.5
 temperature: 0.1
@@ -70,14 +70,14 @@ Structure your findings like this:
 ## Thought Documents about [Topic]
 
 ### Architecture
-- `thoughts/architecture/data-pipeline.md - Targets/Make for commune-level income build`
+- `thoughts/architecture/data-pipeline.md - Targets/Make for commune-level income build
 
 ### Tickets
-- `thoughts/tickets/ds_0137_commune_income_pc.md` - Build commune-level income_pc from survey + INSEE shapefile
+- `thoughts/tickets/feature-commune-income-pc-123.md` - Build commune-level income_pc from survey + INSEE shapefile
 
 ### Research
-- `thoughts/research/2025-02-18_shapefile_vintage_projection.md` - INSEE 2010 vs 2015; EPSG:2154 (Lambert-93) decision
-- `thoughts/research/variable_construction_income_pc.md` - Definition and winsorization thresholds
+- `thoughts/research/2025-02-18_shapefile-vintage-projection.md` - INSEE 2010 vs 2015; EPSG:2154 (Lambert-93) decision
+- `thoughts/shared/research/variable_construction_income_pc.md` - Definition and winsorization thresholds
 
 ### Implementation Plans
 - `thoughts/plans/merge-commune-shapes.md` - Step-by-step spatial join (st_join) and QA checks
