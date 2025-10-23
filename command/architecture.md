@@ -41,7 +41,8 @@ Check if `thoughts/architecture/` directory exists and contains files.
   - Architectural patterns in use
   - Testing patterns and conventions
   - API/CLI design patterns (if applicable)
-  - Data persistence patterns
+  - Data persistence and workflow patterns
+  - Reproducibility practices
 - **WAIT** for all pattern-finder agents to complete
 
 **Phase 3 - Analyze (Codebase & Architecture):**
@@ -88,9 +89,9 @@ Based on responses, determine which architectural documents are necessary:
 For each document to be created, ask targeted questions:
 
 For `system-architecture.md`:
-- What versions of key technologies are in use?
-- Are there specific infrastructure dependencies (databases, caches, message queues)?
-- What build/deployment tooling is configured?
+- What versions of key technologies are in use (languages, frameworks, tools)?
+- What infrastructure or external dependencies exist (databases, compute resources, data sources)?
+- What build, deployment, or workflow orchestration tooling is configured?
 
 For `domain-model.md`:
 - What are the core business entities?
@@ -98,9 +99,9 @@ For `domain-model.md`:
 - What are the main user workflows?
 
 For `persistence.md`:
-- What data storage technologies are in use?
-- Is there a migration strategy in place?
-- Are there caching or performance considerations?
+- What data storage approach is in use (databases, file-based, hybrid)?
+- How is data schema or structure managed and versioned?
+- Are there data lifecycle or performance considerations?
 
 For optional documents (only if applicable):
 - API: Authentication approach? Versioning strategy? Error handling patterns?
@@ -123,11 +124,11 @@ Create **core documents** (always required):
 - Quick reference for project structure
 
 **thoughts/architecture/system-architecture.md** - Technical infrastructure
-- Programming languages and usage patterns
-- Frameworks, libraries, dependencies
-- Infrastructure components (databases, caches, queues, etc.)
-- Build and deployment tooling
-- Development environment requirements
+- Programming languages and versions
+- Frameworks, libraries, and dependency management
+- Infrastructure components (databases, compute resources, external services, etc.)
+- Build, deployment, and workflow orchestration tooling
+- Development environment requirements (IDEs, computational specs, etc.)
 - Configuration management
 
 **thoughts/architecture/domain-model.md** - Business logic and features
@@ -151,18 +152,18 @@ Create **core documents** (always required):
 - CI/CD pipeline
 - Documentation maintenance
 comunque a
-**thoughts/architecture/persistence.md**- Data storage
-- Storage technologies and versions
-- Schema design principles
-- Migration strategy
-- Caching approach
-- Backup and recovery procedures
+**thoughts/architecture/persistence.md** - Data storage and schema management
+- Storage approach and technologies (databases, file systems, object stores)
+- Data structure definition and schema management (migrations, codebooks, versioning)
+- Performance optimization (caching, indexing)
+- Backup, recovery, and archival procedures
 
-Create **optional documents** based on context from step 2B, for example:
+Create **optional documents** based on project-specific needs identified in step 2B. Examples of optional documents:
 
-- **thoughts/architecture/api-design.md** (if project has APIs) - Endpoints, auth, versioning, request/response formats, error handling
-- **thoughts/architecture/cli-design.md** (if project has CLI) - Commands, configuration, output formatting, error handling
-- **thoughts/architecture/event-bus.md** (if project uses events) - Event types/schemas, pub/sub patterns, error handling
+- **thoughts/architecture/data-pipeline.md** - Data workflow orchestration, transformation stages, quality checks
+- **thoughts/architecture/relevant-literature.md** - Key academic references, methodological sources, domain context
+
+Choose and create only the optional documents that match the project's actual architecture and domain requirements.
 
 ### 5. Populate documents with project-specific content (PATH B only)
 
