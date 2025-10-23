@@ -58,6 +58,8 @@ When something isn't working as expected:
   - For R: check `renv.lock` and `.Rprofile` for package versions, R version in `DESCRIPTION` or `Dockerfile`
   - For Python: check `requirements.txt`, `pyproject.toml`, or `environment.yml` for package versions and Python version
   - Check if data schemas, file paths, or external dependencies have changed
+- Check `thoughts/docs/` for relevant web research on the technology/methodology (searchable by filename date and topic)
+- If external documentation needed, spawn **web-search-researcher** for frameworks, APIs, or best practices (results cached to `thoughts/docs/` for reuse)
 - Present the mismatch clearly and ask for guidance
 
 Use sub-tasks sparingly - mainly for targeted debugging or exploring unfamiliar territory.

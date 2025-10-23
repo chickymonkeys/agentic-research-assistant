@@ -202,6 +202,14 @@ patterns: [comma-separated patterns to search for]
 ## Related Information
 [Any related tickets, documents, or context]
 
+### Recommended Web Research
+[If ticket involves unfamiliar technologies, external APIs, data sources, or methodologies, list specific web research queries that would be valuable during the research phase. The web-search-researcher agent can investigate these topics and cache results to `thoughts/docs/` for reuse.]
+
+Examples:
+- "OAuth2 authentication best practices for REST APIs"
+- "IPUMS census microdata variable definitions for income analysis"
+- "Difference-in-differences with staggered treatment timing methodology"
+
 ## Notes
 [Any additional notes or questions for research/planning]
 ```
