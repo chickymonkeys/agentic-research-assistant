@@ -151,7 +151,7 @@ Create **core documents** (always required):
 - Branching strategy
 - CI/CD pipeline
 - Documentation maintenance
-comunque a
+
 **thoughts/architecture/persistence.md** - Data storage and schema management
 - Storage approach and technologies (databases, file systems, object stores)
 - Data structure definition and schema management (migrations, codebooks, versioning)
@@ -259,18 +259,21 @@ Use the todowrite tool to create a structured task list, marking each as pending
 - Include TODO checklists for decisions
 
 ### File Management
+
 - Use Write tool to create new files
 - Use List tool to check existing files
 - Never overwrite without explicit user confirmation
 - Preserve any existing user content
 
 ### User Interaction
+
 - **PATH A:** Present findings, ask confirmation before updating
 - **PATH B:** Start with 2 broad questions, follow with focused questions only for selected documents
 - Confirm before creating/overwriting files
 - Present clear summaries of actions taken
 
 ### Execution Path Requirements
+
 **PATH A - Refine Mode:**
 - Must use sub-agents in three phases: Locate → Find Patterns → Analyze
 - Must spawn agents in parallel within each phase (never mix agent types across phases)
