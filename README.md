@@ -92,8 +92,8 @@ Most of these commands want the ticket in question that you want to review, exce
 
 ## Skills
 
-- **Python Development** (`skill/python-dev`): Expert guidance for modern Python development. Use for initializing projects, managing dependencies (uv), structuring code (src-layout), enforcing style (ruff/mypy), and writing tests (pytest). Covers the full development lifecycle from setup to CI/CD.
-- **R Development** (`skill/r-dev`): Comprehensive guide for modern R development (Tidyverse, data.table, Spatial). Use for writing R code, creating packages, or optimizing performance. Focuses on vectorization, modern dplyr (1.1+), and strict project management.
+- **Python Development** (`skill/python-dev`): Expert guidance for modern Python development. Use for initializing projects, managing dependencies (uv), structuring code (src-layout), enforcing style (ruff/mypy), and writing tests (pytest). Covers the full development lifecycle from setup to CI/CD. Adapted starting from [@CodingKaiser](https://github.com/CodingKaiser/claude-kaiser-skills) and [@Jamie-BitFlight](https://github.com/Jamie-BitFlight/claude_skills/).
+- **R Development** (`skill/r-dev`): Comprehensive guide for modern R development (Tidyverse, data.table, Spatial). Use for writing R code, creating packages, or optimizing performance. Focuses on vectorization, modern dplyr (1.1+), and strict project management. Adapted starting from [@CodingKaiser](https://github.com/CodingKaiser/claude-kaiser-skills).
 - perplexity-search, transformers, plotly (python) [@K-Dense-AI](https://github.com/K-Dense-AI/claude-scientific-skills)
 - Agent Skills for Context Engineering: [@muratcankoylan](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
 - Skill Creator and Command Development: [@anthropic](https://github.com/anthropics/skills)
