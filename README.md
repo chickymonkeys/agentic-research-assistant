@@ -87,6 +87,24 @@ Between each phase it is important to inspect the output from each phase and ens
 In OpenCode, these commands are invoked with a slash: `/architecture`, `/ticket`, `/research`, `/plan`, `/execute`, etc.
 Most of these commands want the ticket in question that you want to review, exceptions are architecture, ticket itself, and commit/review. Architecture guides you through creating or refining foundational docs. Ticket you give an actual prompt that describes what you're trying to do, and commit/review are meant to work in the context window that you ran execute in so that it has all of the details of how the process itself went.
 
+### Skills (work in progress)
+
+
+## Skills
+
+- **Python Development** (`skill/python-dev`): Expert guidance for modern Python development. Use for initializing projects, managing dependencies (uv), structuring code (src-layout), enforcing style (ruff/mypy), and writing tests (pytest). Covers the full development lifecycle from setup to CI/CD.
+- **R Development** (`skill/r-dev`): Comprehensive guide for modern R development (Tidyverse, data.table, Spatial). Use for writing R code, creating packages, or optimizing performance. Focuses on vectorization, modern dplyr (1.1+), and strict project management.
+- perplexity-search, transformers, plotly (python) [@K-Dense-AI](https://github.com/K-Dense-AI/claude-scientific-skills)
+- Agent Skills for Context Engineering: [@muratcankoylan](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
+- Skill Creator and Command Development: [@anthropic](https://github.com/anthropics/skills)
+- https://github.com/applied-artificial-intelligence/claude-code-toolkit
+
+Install skills globally or into your project by using:
+
+```bash
+bunx skills-installer install @[username]/[repository]/[skill-name] --local --client opencode
+```
+
 ## Documentation
 
 ### Getting Started
